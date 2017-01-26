@@ -32,8 +32,11 @@ require 'lib/io'
 require 'active_support'
 require 'active_support/core_ext'
 
-# require all models
-Dir['./application/models/*.rb'].each { |rb| require rb }
+# require all models, entities, services and validators
+Dir['./application/models/*.rb'].each     { |rb| require rb }
+Dir['./application/entities/*.rb'].each   { |rb| require rb }
+Dir['./application/services/*.rb'].each   { |rb| require rb }
+Dir['./application/validators/*.rb'].each { |rb| require rb }
 
 Dir['./application/api_helpers/**/*.rb'].each { |rb| require rb }
 class Api < Grape::API
@@ -47,6 +50,11 @@ class Api < Grape::API
       ret[:errors][x[0]] ||= []
       ret[:errors][x[0]] << err.message
     end
+    error! ret, 400
+  end
+
+  rescue_from Validators::ValidationError do |e|
+    ret = { error_type: 'validation', errors: e.errors }
     error! ret, 400
   end
 
