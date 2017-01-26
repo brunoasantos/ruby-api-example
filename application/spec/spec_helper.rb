@@ -87,3 +87,6 @@ RSpec.configure do |config|
     end
   end
 end
+
+require 'sidekiq/testing'
+Sidekiq::Testing.fake!

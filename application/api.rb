@@ -22,6 +22,8 @@ class Api < Grape::API; end
 require 'config/sequel'
 require 'config/hanami'
 require 'config/grape'
+require 'config/mailer'
+require 'config/sidekiq'
 
 # require some global libs
 require 'lib/core_ext'
@@ -32,11 +34,12 @@ require 'lib/io'
 require 'active_support'
 require 'active_support/core_ext'
 
-# require all models, entities, services and validators
+# require classes
 Dir['./application/models/*.rb'].each     { |rb| require rb }
 Dir['./application/entities/*.rb'].each   { |rb| require rb }
 Dir['./application/services/*.rb'].each   { |rb| require rb }
 Dir['./application/validators/*.rb'].each { |rb| require rb }
+Dir['./application/workers/*.rb'].each    { |rb| require rb }
 
 Dir['./application/api_helpers/**/*.rb'].each { |rb| require rb }
 class Api < Grape::API

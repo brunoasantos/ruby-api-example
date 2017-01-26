@@ -2,9 +2,10 @@ require 'spec_helper'
 
 describe Api::Services::CreateUser do
   context 'success' do
+    let(:params) { attributes_for(:user) }
+
     it 'should create a new user with dob' do
-      params = attributes_for(:user)
-      user   = described_class.call(params)
+      user = described_class.call(params)
 
       expect(user.id).not_to          be_nil
       expect(user.first_name).to      eq(params[:first_name])
@@ -15,9 +16,8 @@ describe Api::Services::CreateUser do
     end
 
     it 'should create a new user without dob' do
-      params = attributes_for(:user)
       params.delete(:born_on)
-      user   = described_class.call(params)
+      user = described_class.call(params)
 
       expect(user.id).not_to     be_nil
       expect(user.first_name).to eq(params[:first_name])
@@ -25,6 +25,11 @@ describe Api::Services::CreateUser do
       expect(user.email).to      eq(params[:email])
       expect(user.password).to   eq(params[:password])
       expect(user.born_on).to    be_nil
+    end
+
+    it 'should send an email to the user after account is created' do
+      notifier = Api::Workers::AccountCreatedNotification
+      expect { described_class.call(params) }.to change(notifier.jobs, :size).by(1)
     end
   end
 
