@@ -36,7 +36,7 @@ describe Api::Services::CreateUser do
   context 'failure' do
     it 'should validate that required fields are present' do
       params = {}
-      expect { described_class.call(params) }.to raise_error(Api::Validators::ValidationError)
+      expect { described_class.call(params) }.to raise_error(Api::Exceptions::ValidationError)
     end
 
     it 'should validate that fileds are not empty' do
@@ -46,7 +46,7 @@ describe Api::Services::CreateUser do
         email:      '',
         password:   nil
       }
-      expect { described_class.call(params) }.to raise_error(Api::Validators::ValidationError)
+      expect { described_class.call(params) }.to raise_error(Api::Exceptions::ValidationError)
     end
 
     it 'should validate fields types' do
@@ -56,7 +56,7 @@ describe Api::Services::CreateUser do
         email:      {foo: :bar},
         password:   ['foo', 123]
       }
-      expect { described_class.call(params) }.to raise_error(Api::Validators::ValidationError)
+      expect { described_class.call(params) }.to raise_error(Api::Exceptions::ValidationError)
     end
   end
 end

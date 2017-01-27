@@ -20,7 +20,8 @@ end
 if current_task['spec']
   require 'rspec/core/rake_task'
   RSpec::Core::RakeTask.new(:spec) do |t|
-    t.pattern = Dir.glob('application/spec/**/*_spec.rb')
+    t.pattern = ENV['SPEC']
+    t.pattern = Dir.glob('application/spec/**/*_spec.rb') if t.pattern.nil?
     t.ruby_opts = "-I#{File.expand_path("./application/spec")}"
   end
 else

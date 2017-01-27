@@ -1,5 +1,5 @@
 class Api
-  module Validators
+  module Exceptions
     class ValidationError < StandardError
       attr_reader :errors
 

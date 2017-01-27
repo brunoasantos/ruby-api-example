@@ -1,6 +1,11 @@
 require 'spec_helper'
 
 describe 'POST /api/users' do
+  before(:all) do
+    user = create(:user)
+    login_as(user)
+  end
+
   context 'success' do
     it 'should create a new user with dob' do
       params = attributes_for(:user)
