@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Api::Workers::AccountCreatedNotification do
+describe Api::Workers::PasswordUpdatedNotification do
   include Mail::Matchers
 
   it 'send an email to the user' do
@@ -9,8 +9,8 @@ describe Api::Workers::AccountCreatedNotification do
     subject.perform(user.id)
     expect have_sent_email.from(SYSTEM_EMAIL)
                             .to('foo@example.com')
-                            .with_subject('Account created')
-                            .with_body('Your account was successfully created')
+                            .with_subject('Password update')
+                            .with_body('Your password was successfully updated')
   end
 
   it 'fails when user is not found' do

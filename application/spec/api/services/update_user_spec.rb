@@ -39,16 +39,5 @@ describe Api::Services::UpdateUser do
       }
       expect { described_class.call(user, params) }.to raise_error(Api::Exceptions::ValidationError)
     end
-
-    it 'should raise error if user is not found' do
-      params = {first_name: 'foo', id: 0}
-      expect { described_class.call(user, params) }.to raise_error(Api::Exceptions::NotFoundError)
-    end
-
-    it 'should raise error if user dont have permission' do
-      another_user = create(:user)
-      params = {first_name: 'foo', id: another_user.id}
-      expect { described_class.call(user, params) }.to raise_error(Api::Exceptions::ForbiddenError)
-    end
   end
 end

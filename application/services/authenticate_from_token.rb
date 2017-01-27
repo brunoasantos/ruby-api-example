@@ -5,10 +5,7 @@ class Api
         token   = ::JWT.decode(params[:token], HMAC_SECRET, true)
         user_id = token.first['user_id']
 
-        user = Models::User[user_id]
-        raise Exceptions::NotFoundError.new unless user
-
-        user
+        GetUser.call(user_id)
       end
     end
   end

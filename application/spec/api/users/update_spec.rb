@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'UPDATE /api/users/:id' do
+describe 'PUT /api/users/:id' do
   let(:user) { create(:user) }
 
   context 'success' do

@@ -1,6 +1,6 @@
 class Api
   module Workers
-    class AccountCreatedNotification
+    class PasswordUpdatedNotification
       include Sidekiq::Worker
 
       def perform(user_id)
@@ -8,8 +8,8 @@ class Api
         mail = ::Mail.new do
           from    SYSTEM_EMAIL
           to      user.email
-          subject 'Account created'
-          body    'Your account was successfully created'
+          subject 'Password updated'
+          body    'Your password was successfully updated'
         end
 
         mail.deliver!
